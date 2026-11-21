@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0716">
+<title>CLIPNOVA AI - Gaming Shorts Generator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="logo">&#9889;</span> CLIPNOVA <b>AI</b><small>Gaming Shorts Generator</small></div>
+  <div class="conn"><span id="dot" class="dot"></span><span id="connText">not connected</span></div>
+</header>
+
+<main>
+<section class="card" id="sec-backend">
+  <h2><i>0</i> Backend</h2>
+  <div class="row">
+    <input id="apiUrl" type="url" placeholder="https://your-backend-url" autocomplete="off">
+    <button id="btnConnect" class="btn">Connect</button>
+  </div>
+  <p id="healthInfo" class="hint">Paste the URL printed by your backend (Colab / server), then tap Connect.</p>
+</section>
+
+<section class="card" id="sec-upload">
+  <h2><i>1</i> Upload Gameplay</h2>
+  <label class="drop" for="file"><span>&#127918; Tap to choose a gameplay video</span><small>MP4 / MOV / WebM &middot; 5-10 min recommended</small></label>
+  <input id="file" type="file" accept="video/mp4,video/quicktime,video/webm,.mp4,.mov,.webm,.m4v" hidden>
+  <div id="fileInfo" class="info hidden"></div>
+  <video id="srcVideo" class="player hidden" controls playsinline preload="metadata"></video>
+  <div class="bar hidden" id="upBar"><div></div></div>
+  <p id="upMsg" class="hint"></p>
+  <button id="btnUpload" class="btn primary" disabled>Upload to backend</button>
+</section>
+
+<section class="card" id="sec-analyze">
+  <h2><i>2</i> Video Analysis</h2>
+  <div class="grid2">
+    <label>Speech language
+      <select id="language"><option value="auto">Auto-detect</option><option value="hi">Hindi / Hinglish</option><option value="en">English</option></select></label>
+    <label>Caption script
+      <select id="script"><option value="roman">Roman (Hinglish)</option><option value="native">Original (Hindi = Devanagari)</option></select></label>
+  </div>
+  <div class="bar hidden" id="anBar"><div></div></div>
+  <p id="anMsg" class="hint">Upload a video first.</p>
+  <button id="btnAnalyze" class="btn primary" disabled>Analyze gameplay</button>
+</section>
+
+<section class="card" id="sec-highlights">
+  <h2><i>3</i> Detected Highlights</h2>
+  <p id="limits" class="hint">Highlights appear here after the analysis.</p>
+  <div id="hlList" class="hl-list"></div>
+</section>
+
+<section class="card" id="sec-captions">
+  <h2><i>4</i> Caption Editor</h2>
+  <div class="editor">
+    <div class="phone" id="phone">
+      <video id="prevVideo" playsinline controls preload="metadata"></video>
+      <div id="capOverlay" class="cap"></div>
+    </div>
+    <div class="settings">
+      <label class="chk"><input type="checkbox" id="capOn" checked> Captions on</label>
+      <label>Style <select id="capStyle"><option value="classic">Classic (white + yellow)</option><option value="neon">Neon (purple / green / yellow)</option><option value="minimal">Minimal (cyan)</option></select></label>
+      <label>Font size <output id="fsOut">76</output><input type="range" id="fontSize" min="40" max="120" value="76"></label>
+      <label>Position (top &rarr; bottom) <output id="posOut">66</output><input type="range" id="posY" min="20" max="90" value="66"></label>
+      <div class="grid2">
+        <label>Text colour <input type="color" id="textColor" value="#ffffff"></label>
+        <label>Highlight colour <input type="color" id="hlColor" value="#ffe600"></label>
+      </div>
+      <label class="chk"><input type="checkbox" id="useHl"> Use my highlight colour for every style</label>
+      <label class="chk"><input type="checkbox" id="upper" checked> UPPERCASE</label>
+      <label class="chk"><input type="checkbox" id="emph" checked> Emphasise important words</label>
+    </div>
+  </div>
+  <h3 id="wordsTitle">Transcript words</h3>
+  <p class="hint">Edit wrong words, tap &#9733; to force/unforce emphasis, &times; to remove. Times stay fixed.</p>
+  <div id="words" class="words"></div>
+  <p class="hint">The preview approximates the final look; the burned-in video is drawn by FFmpeg and may differ slightly in glow/outline.</p>
+</section>
+
+<section class="card" id="sec-render">
+  <h2><i>5</i> Render Shorts</h2>
+  <div class="grid2">
+    <label>Layout <select id="layout"><option value="blur">Full gameplay + blurred background</option><option value="crop">Fill screen (crop sides)</option></select></label>
+    <label>Resolution <select id="resolution"><option value="720">720 x 1280 (recommended)</option><option value="1080">1080 x 1920 (slower)</option></select></label>
+  </div>
+  <label class="chk"><input type="checkbox" id="zoom"> Subtle slow zoom</label>
+  <div class="bar hidden" id="rnBar"><div></div></div>
+  <p id="rnMsg" class="hint">Select highlights above, then render.</p>
+  <button id="btnRender" class="btn primary" disabled>Render selected Shorts</button>
+</section>
+
+<section class="card" id="sec-download">
+  <h2><i>6</i> Download Videos</h2>
+  <div id="dlList" class="dl-list"><p class="hint">Finished clips appear here.</p></div>
+</section>
+</main>
+<footer>CLIPNOVA AI &middot; processing happens on your own backend &middot; files are auto-deleted after the cleanup period</footer>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
